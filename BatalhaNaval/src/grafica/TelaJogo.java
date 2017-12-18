@@ -431,7 +431,7 @@ public class TelaJogo extends JFrame implements ActionListener, MouseInputListen
 						
 					}else if(matrizLogica[l][c] == 3)
 					{
-						Submarino s1 = (Submarino) recEmbarcacao(1,u);
+						Submarino s1 = (Submarino) recEmbarcacao(3,u);
 						
 						if (s1.descobrir())
 						{
