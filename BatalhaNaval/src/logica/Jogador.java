@@ -12,7 +12,8 @@ public class Jogador
 	protected boolean vez;
 	protected int pontuacao = 0;
 	protected ArrayList<Object> embarcacoes = new ArrayList<>();
-
+	
+	// prind
 	public ArrayList<Object> getEmbarcacoes()
 	{
 		return embarcacoes;

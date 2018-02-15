@@ -38,6 +38,15 @@ public class Computador extends Jogador
 		this.possiveisEscolhas.add(3);
 	}
 	
+	public void removeEscolha(int k)
+	{
+		this.possiveisEscolhas.remove(k);
+	}
+	
+	public void removeJogada(int k)
+	{
+		this.possiveisJogadas.remove(k);
+	}
 	public ArrayList<Integer> getPossiveisEscolhas()
 	{
 		return possiveisEscolhas;

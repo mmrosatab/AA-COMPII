@@ -31,8 +31,8 @@ import util.Tupla;
 public class TelaJogo extends JFrame implements ActionListener, MouseInputListener
 {
 	
-	private final int  ESP_X = 50;
-	private final int  ESP_XC = 460;
+	private final int ESP_X = 50;
+	private final int ESP_XC = 460;
 	private final int ESP_Y = 60;
 	private final int TAM_BOTAO = 30;
 	private final int DIM = 10;
@@ -563,9 +563,10 @@ public class TelaJogo extends JFrame implements ActionListener, MouseInputListen
 						
 						if (s1.descobrir())
 						{
+							System.out.println("sub1");
 							cpu.getEmbarcacoes().remove(cpu.indexEmbarcacao(s1));
 							int rmv = 0;
-							
+							System.out.println("sub2");
 							for (int j = 0; j < cpu.getPossiveisEscolhas().size(); j++)
 							{
 								if (cpu.getPossiveisEscolhas().get(j) == 3)
@@ -593,7 +594,7 @@ public class TelaJogo extends JFrame implements ActionListener, MouseInputListen
 				}
 			}
 			
-			if(cpu.getEmbarcacoes().isEmpty()|| cpu.getPossiveisEscolhas().isEmpty())
+			if(cpu.getEmbarcacoes().isEmpty()|| cpu.getPossiveisEscolhas().isEmpty()||this.computador.getPossiveisJogadas().isEmpty())
 			{
 				this.iniciado = !this.iniciado; 
 				Verificar();
@@ -610,62 +611,80 @@ public class TelaJogo extends JFrame implements ActionListener, MouseInputListen
 	public void jogadaCpu()
 	{
 		
-	    int escolha = this.computador.getPossiveisEscolhas().get(0); // 1navio  2 caca  3 sub
-	    
-	    int lin = this.computador.getPossiveisJogadas().get(0).getI();
-	    int col = this.computador.getPossiveisJogadas().get(0).getJ();
-	    
-	    this.computador.getPossiveisJogadas().remove(0);
-	
-		if (this.tU[lin][col].isEnabled())
+		
+		if(this.computador.getPossiveisEscolhas().size() > 0 && computador.getPossiveisJogadas().size() > 0)
 		{
-			
-			//System.out.println("button i: "+i+"button j: "+j);
-			if (escolha == 2)
-			{
-			
-				posicoes = this.usuario.receberJogada(this.computador.atirar(lin, col, recEmbarcacao(2,computador)));
+			Random r1 = new Random();
+		
+			int k = r1.nextInt(computador.getPossiveisJogadas().size());
+			int escolha = this.computador.getPossiveisEscolhas().get(0); // 1navio  2 caca  3 sub
 
-				jogar(posicoes, this.usuario,this.tU);
-				
-				posicoes.clear();
-				this.computador.setVez(false);
-				this.usuario.setVez(true);
-				this.escolha = -1;
-				
-				
-			}else if (escolha == 3)
-			{
-				//System.out.println("escolha 3");
-				
-				posicoes = this.usuario.receberJogada(this.computador.atirar(lin, col, recEmbarcacao(3,computador)));
-				jogar(posicoes, this.usuario,this.tU);
-				
-				posicoes.clear();
-				this.computador.setVez(false);
-				this.usuario.setVez(true);
-				this.escolha = -1;
-				
-			}else if (escolha == 1)
+		    
+		    int lin = this.computador.getPossiveisJogadas().get(k).getI();
+		    int col = this.computador.getPossiveisJogadas().get(k).getJ();
+		    
+		    System.out.println("lin : "+lin);
+		    System.out.println("col : "+col);
+		    
+		    this.computador.removeJogada(0);
+		
+			if (this.tU[lin][col].isEnabled())
 			{
 				
-				posicoes = this.usuario.receberJogada(this.computador.atirar(lin, col, recEmbarcacao(1,computador)));
-				jogar(posicoes, this.usuario,this.tU);
+				//System.out.println("button i: "+i+"button j: "+j);
+				if (escolha == 2)
+				{
 				
-				posicoes.clear();
-				this.computador.setVez(false);
-				this.usuario.setVez(true);
-				this.escolha = -1;
-				
+					posicoes = this.usuario.receberJogada(this.computador.atirar(lin, col, recEmbarcacao(2,computador)));
+	
+					jogar(posicoes, this.usuario,this.tU);
+					
+					posicoes.clear();
+					this.computador.setVez(false);
+					this.usuario.setVez(true);
+					this.escolha = -1;
+					
+					
+				}else if (escolha == 3)
+				{
+					//System.out.println("escolha 3");
+					
+					posicoes = this.usuario.receberJogada(this.computador.atirar(lin, col, recEmbarcacao(3,computador)));
+					jogar(posicoes, this.usuario,this.tU);
+					
+					posicoes.clear();
+					this.computador.setVez(false);
+					this.usuario.setVez(true);
+					this.escolha = -1;
+					
+				}else if (escolha == 1)
+				{
+					
+					posicoes = this.usuario.receberJogada(this.computador.atirar(lin, col, recEmbarcacao(1,computador)));
+					jogar(posicoes, this.usuario,this.tU);
+					
+					posicoes.clear();
+					this.computador.setVez(false);
+					this.usuario.setVez(true);
+					this.escolha = -1;
+					
+					
+				}
 				
 			}
+			else
+			{
+				System.out.println("entrei");
+				jogadaCpu();
+				this.computador.setVez(false);
+			}
 			
-		}
-		else
+		}else 
 		{
-			System.out.println("entrei");
-			jogadaCpu();
-			this.computador.setVez(false);
+			this.iniciado = !this.iniciado; 
+			Verificar();
+			JOptionPane.showMessageDialog(null,"Voce ganhou");
+			
 		}
 		
 	}
