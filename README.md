@@ -1,4 +1,4 @@
-# AA-COMPII
+# AACOMPII
 Atividade Acadêmica Computação II UFRRJ
 
 Este repositório se destina a Atividade Acadêmica de Computação I. O trabalho consiste em um Jogo de Batalha Naval para dois usuários desenvolvido em Java.
